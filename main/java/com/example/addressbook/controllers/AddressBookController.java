@@ -1,9 +1,10 @@
 package com.example.addressbook.controllers;
 import java.util.List;
+import java.util.Optional;
+
 import com.example.addressbook.entities.AddressEntity;
 import com.example.addressbook.services.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
@@ -16,6 +17,11 @@ public class AddressBookController {
         public List<AddressEntity> getAllContacts() {
             return service.getAllContacts();
         }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<AddressEntity>> getContactById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getContactById(id));
+    }
 
         @PostMapping("/save")
         public AddressEntity addContact(@RequestBody AddressEntity contact) {
@@ -35,5 +41,9 @@ public class AddressBookController {
     public ResponseEntity<String> deleteAllContacts() {
         service.deleteAllContacts();
         return ResponseEntity.ok("All contacts deleted successfully");
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<AddressEntity> updateContact(@PathVariable Long id, @RequestBody AddressEntity updatedContact) {
+        return ResponseEntity.ok(service.updateContact(id, updatedContact));
     }
 }

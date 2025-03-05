@@ -1,5 +1,7 @@
 package com.example.addressbook.services;
 import java.util.List;
+import java.util.Optional;
+
 import com.example.addressbook.entities.AddressEntity;
 import com.example.addressbook.repositories.AddressBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,10 @@ public class AddressBookService {
             return repository.findAll();
         }
 
+    public Optional<AddressEntity> getContactById(Long id) {
+        return repository.findById(id);
+    }
+
         public AddressEntity saveContact(AddressEntity contact) {
             return repository.save(contact);
         }
@@ -26,5 +32,14 @@ public class AddressBookService {
         }
     public void deleteAllContacts() {
         repository.deleteAll();
+    }
+    public AddressEntity updateContact(Long id, AddressEntity updatedContact) {
+        return repository.findById(id).map(contact -> {
+            contact.setName(updatedContact.getName());
+            contact.setPhone(updatedContact.getPhone());
+            contact.setEmail(updatedContact.getEmail());
+            contact.setAddress(updatedContact.getAddress());
+            return repository.save(contact);
+        }).orElse(null);
     }
 }
