@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.addressbook.entities.AddressEntity;
+import com.example.addressbook.entities.AddressEntityDTO;
 import com.example.addressbook.repositories.AddressBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,12 @@ public class AddressBookService {
         return repository.findById(id);
     }
 
-        public AddressEntity saveContact(AddressEntity contact) {
+        public AddressEntity saveContact(AddressEntityDTO contactDTO) {
+            AddressEntity contact = new AddressEntity();
+            contact.setName(contactDTO.getName());
+            contact.setPhone(contactDTO.getPhone());
+            contact.setEmail(contactDTO.getEmail());
+            contact.setAddress(contactDTO.getAddress());
             return repository.save(contact);
         }
 
@@ -33,7 +39,7 @@ public class AddressBookService {
     public void deleteAllContacts() {
         repository.deleteAll();
     }
-    public AddressEntity updateContact(Long id, AddressEntity updatedContact) {
+    public AddressEntity updateContact(Long id, AddressEntityDTO updatedContact) {
         return repository.findById(id).map(contact -> {
             contact.setName(updatedContact.getName());
             contact.setPhone(updatedContact.getPhone());
