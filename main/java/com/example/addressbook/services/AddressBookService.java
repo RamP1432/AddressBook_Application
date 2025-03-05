@@ -36,6 +36,7 @@ public class AddressBookService {
                return true;}
             return false;
         }
+
     public void deleteAllContacts() {
         repository.deleteAll();
     }

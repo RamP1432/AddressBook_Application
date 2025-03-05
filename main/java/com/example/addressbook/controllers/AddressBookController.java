@@ -31,7 +31,7 @@ public class AddressBookController {
         }
 
         @DeleteMapping("/{id}")
-        public ResponseEntity<String> deleteContact(@PathVariable Long id) {
+        public ResponseEntity<String> deleteContact(@PathVariable Long id) throws ClassCastException{
             boolean flag = service.deleteContact(id);
             if (flag) {
                 return ResponseEntity.ok("Contact deleted successfully");
